@@ -14,7 +14,54 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      apps: {
+        Row: {
+          active: boolean
+          category: string
+          created_at: string
+          description: string
+          featured: boolean
+          id: string
+          logo_text: string
+          name: string
+          score: number
+          slug: string
+          tagline: string
+          verified: boolean
+          website_url: string
+        }
+        Insert: {
+          active?: boolean
+          category: string
+          created_at?: string
+          description: string
+          featured?: boolean
+          id?: string
+          logo_text: string
+          name: string
+          score: number
+          slug: string
+          tagline: string
+          verified?: boolean
+          website_url: string
+        }
+        Update: {
+          active?: boolean
+          category?: string
+          created_at?: string
+          description?: string
+          featured?: boolean
+          id?: string
+          logo_text?: string
+          name?: string
+          score?: number
+          slug?: string
+          tagline?: string
+          verified?: boolean
+          website_url?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
