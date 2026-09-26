@@ -8,3 +8,6 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+- Public directory reads use server functions backed by the `apps` table; this keeps SSR pages and sitemap data consistent.
+- Shared site navigation and directory cards live in `src/components/applifyr`; this prevents visual drift across routes.
