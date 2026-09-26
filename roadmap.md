@@ -7,3 +7,11 @@
 - [x] Verify desktop and mobile flows
 
 - [x] Set the preview to a mobile phone viewport
+
+## Requested Cloud directory refresh
+
+- [x] Align the apps table with the requested field names
+- [x] Add six named demo apps
+- [ ] Add homepage search and category filtering
+- [ ] Update all pages to the aligned directory fields
+- [ ] Verify the full mobile flow
