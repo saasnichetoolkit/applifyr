@@ -1,0 +1,15 @@
+ALTER TABLE public.apps ADD COLUMN title TEXT;
+ALTER TABLE public.apps ADD COLUMN rating NUMERIC(3,1);
+ALTER TABLE public.apps ADD COLUMN is_featured BOOLEAN NOT NULL DEFAULT false;
+ALTER TABLE public.apps ADD COLUMN is_verified BOOLEAN NOT NULL DEFAULT true;
+UPDATE public.apps SET title = name, rating = score, is_featured = featured, is_verified = verified;
+ALTER TABLE public.apps ALTER COLUMN title SET NOT NULL;
+ALTER TABLE public.apps ALTER COLUMN rating SET NOT NULL;
+ALTER TABLE public.apps ADD CONSTRAINT apps_rating_range CHECK (rating >= 0 AND rating <= 10);
+ALTER TABLE public.apps DROP CONSTRAINT apps_category_check;
+ALTER TABLE public.apps ADD CONSTRAINT apps_category_check CHECK (category IN ('productivity', 'finance', 'developer_tools', 'marketing_seo', 'design_creative', 'ai_tools', 'other'));
+CREATE INDEX apps_is_featured_active_idx ON public.apps (is_featured, active);
+COMMENT ON COLUMN public.apps.name IS 'DEPRECATED: replaced by title';
+COMMENT ON COLUMN public.apps.score IS 'DEPRECATED: replaced by rating';
+COMMENT ON COLUMN public.apps.featured IS 'DEPRECATED: replaced by is_featured';
+COMMENT ON COLUMN public.apps.verified IS 'DEPRECATED: replaced by is_verified';

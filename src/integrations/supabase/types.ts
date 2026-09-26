@@ -22,11 +22,15 @@ export type Database = {
           description: string
           featured: boolean
           id: string
+          is_featured: boolean
+          is_verified: boolean
           logo_text: string
           name: string
+          rating: number
           score: number
           slug: string
           tagline: string
+          title: string
           verified: boolean
           website_url: string
         }
@@ -37,11 +41,15 @@ export type Database = {
           description: string
           featured?: boolean
           id?: string
+          is_featured?: boolean
+          is_verified?: boolean
           logo_text: string
           name: string
+          rating: number
           score: number
           slug: string
           tagline: string
+          title: string
           verified?: boolean
           website_url: string
         }
@@ -52,11 +60,15 @@ export type Database = {
           description?: string
           featured?: boolean
           id?: string
+          is_featured?: boolean
+          is_verified?: boolean
           logo_text?: string
           name?: string
+          rating?: number
           score?: number
           slug?: string
           tagline?: string
+          title?: string
           verified?: boolean
           website_url?: string
         }

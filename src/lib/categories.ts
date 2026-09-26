@@ -5,5 +5,6 @@ export const categories = [
   { slug: "marketing_seo", label: "Marketing & SEO", code: "MKT", description: "Growth, analytics, publishing, and search intelligence." },
   { slug: "design_creative", label: "Design & Creative", code: "DSN", description: "Tools for visual craft, collaboration, and production." },
   { slug: "ai_tools", label: "AI Tools", code: "AIX", description: "Applied intelligence for research, creation, and automation." },
+  { slug: "other", label: "Other", code: "OTH", description: "Useful software that crosses categories or creates a new one." },
 ] as const;
 export const categoryLabels: Record<string, string> = Object.fromEntries(categories.map((item) => [item.slug, item.label]));

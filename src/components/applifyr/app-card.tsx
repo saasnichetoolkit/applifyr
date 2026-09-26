@@ -15,12 +15,12 @@ export function AppCard({ app, featured = false }: { app: AppRecord; featured?: 
           {app.logo_text}
         </div>
         <div className="rounded-md border border-signal/30 bg-signal/10 px-2.5 py-1.5 font-mono text-lg font-semibold text-signal">
-          {Number(app.score).toFixed(1)}
+          {Number(app.rating).toFixed(1)}
         </div>
       </div>
       <div className="mt-7 flex items-center gap-2">
-        <h3 className="font-display text-xl font-semibold text-foreground">{app.name}</h3>
-        {app.verified && <BadgeCheck className="size-4 text-signal" aria-label="Verified" />}
+        <h3 className="font-display text-xl font-semibold text-foreground">{app.title}</h3>
+        {app.is_verified && <BadgeCheck className="size-4 text-signal" aria-label="Verified" />}
       </div>
       <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">{app.tagline}</p>
       <div className="mt-5 flex items-center justify-between border-t border-border pt-4">

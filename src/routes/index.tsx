@@ -1,9 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { ArrowRight, ChevronLeft, ChevronRight, RadioTower } from "lucide-react";
+import { ArrowRight, RadioTower, Search } from "lucide-react";
 import { listApps } from "@/lib/apps.functions";
 import { AppCard } from "@/components/applifyr/app-card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { categories } from "@/lib/categories";
 
 export const Route = createFileRoute("/")({
   loader: () => listApps({ data: {} }),
@@ -20,11 +22,15 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   const apps = Route.useLoaderData();
-  const featured = apps.filter((app) => app.featured).slice(0, 4);
-  const [page, setPage] = useState(0);
-  const pageSize = 6;
-  const pages = Math.ceil(apps.length / pageSize);
-  const recent = apps.slice(page * pageSize, (page + 1) * pageSize);
+  const featured = apps.filter((app) => app.is_featured).slice(0, 4);
+  const [search, setSearch] = useState("");
+  const [category, setCategory] = useState("all");
+  const normalizedSearch = search.trim().toLowerCase();
+  const filteredApps = apps.filter((app) => {
+    const matchesCategory = category === "all" || app.category === category;
+    const matchesSearch = !normalizedSearch || `${app.title} ${app.tagline}`.toLowerCase().includes(normalizedSearch);
+    return matchesCategory && matchesSearch;
+  });
   return (
     <>
       <section className="industrial-grid relative overflow-hidden border-b border-border">
@@ -50,9 +56,13 @@ function HomePage() {
       </section>
       <section className="border-t border-border bg-card/40">
         <div className="mx-auto max-w-7xl px-5 py-20 lg:px-8">
-          <div className="mb-9 flex items-end justify-between"><div><p className="font-mono text-[11px] uppercase text-signal">Latest index / 02</p><h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">Recent submissions</h2></div><div className="font-mono text-xs text-muted-foreground">{String(page + 1).padStart(2,'0')} / {String(pages).padStart(2,'0')}</div></div>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">{recent.map((app) => <AppCard key={app.id} app={app} />)}</div>
-          <div className="mt-8 flex justify-end gap-2"><Button variant="outline" size="icon" disabled={page === 0} onClick={() => setPage((p) => p - 1)} aria-label="Previous page"><ChevronLeft /></Button><Button variant="outline" size="icon" disabled={page >= pages - 1} onClick={() => setPage((p) => p + 1)} aria-label="Next page"><ChevronRight /></Button></div>
+          <div><p className="font-mono text-[11px] uppercase text-signal">Directory / 02</p><h2 className="mt-3 font-display text-3xl font-semibold sm:text-4xl">All apps</h2></div>
+          <div className="mt-8 grid gap-3 md:grid-cols-[1fr_240px]">
+            <label className="relative"><span className="sr-only">Search apps</span><Search className="pointer-events-none absolute left-3 top-1/2 size-4 -translate-y-1/2 text-muted-foreground"/><Input value={search} onChange={(event)=>setSearch(event.target.value)} placeholder="Search by title or tagline" className="pl-10"/></label>
+            <label><span className="sr-only">Filter by category</span><select value={category} onChange={(event)=>setCategory(event.target.value)} className="h-10 w-full rounded-md border border-input bg-background px-3 text-sm"><option value="all">All categories</option>{categories.map((item)=><option key={item.slug} value={item.slug}>{item.label}</option>)}</select></label>
+          </div>
+          <div className="mt-4 font-mono text-xs text-muted-foreground">{filteredApps.length} {filteredApps.length === 1 ? "app" : "apps"} found</div>
+          {filteredApps.length > 0 ? <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">{filteredApps.map((app) => <AppCard key={app.id} app={app} />)}</div> : <div className="mt-6 border border-border bg-background px-6 py-14 text-center text-muted-foreground">No apps match this search.</div>}
         </div>
       </section>
     </>
