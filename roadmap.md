@@ -6,4 +6,4 @@
 - [x] Build explore, categories, builder, sign-in, submission, and sitemap routes
 - [x] Verify desktop and mobile flows
 
-- [ ] Set the preview to a mobile phone viewport
+- [x] Set the preview to a mobile phone viewport
