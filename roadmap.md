@@ -12,6 +12,12 @@
 
 - [x] Align the apps table with the requested field names
 - [x] Add six named demo apps
-- [ ] Add homepage search and category filtering
-- [ ] Update all pages to the aligned directory fields
-- [ ] Verify the full mobile flow
+- [x] Add homepage search and category filtering
+- [x] Update all pages to the aligned directory fields
+- [x] Verify the full mobile flow
+
+## Real indie directory data
+
+- [ ] Remove all placeholder apps
+- [ ] Add Book Launch Desk, TrueMargin AI, and Up All Good
+- [ ] Verify featured and main homepage grids
