@@ -93,7 +93,7 @@ ${page}`;
     }
   }
 
-  let parsed: Record<string, unknown>;
+  let parsed: { title?: unknown; tagline?: unknown; description?: unknown; category?: unknown; score?: unknown };
   try {
     parsed = JSON.parse(out.slice(out.indexOf("{"), out.lastIndexOf("}") + 1));
   } catch {
