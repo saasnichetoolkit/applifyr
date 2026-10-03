@@ -29,6 +29,7 @@ export type Database = {
           rating: number
           score: number
           slug: string
+          status: string
           tagline: string
           title: string
           verified: boolean
@@ -48,6 +49,7 @@ export type Database = {
           rating: number
           score: number
           slug: string
+          status?: string
           tagline: string
           title: string
           verified?: boolean
@@ -67,6 +69,7 @@ export type Database = {
           rating?: number
           score?: number
           slug?: string
+          status?: string
           tagline?: string
           title?: string
           verified?: boolean
