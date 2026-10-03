@@ -18,6 +18,7 @@ import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SubmitRouteImport } from './routes/submit'
 import { Route as AppSlugRouteImport } from './routes/app/$slug'
 import { Route as CategoryCategoryRouteImport } from './routes/category/$category'
+import { Route as ApiPublicIngestAppRouteImport } from './routes/api/public/ingest-app'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -64,6 +65,11 @@ const CategoryCategoryRoute = CategoryCategoryRouteImport.update({
   path: '/category/$category',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicIngestAppRoute = ApiPublicIngestAppRouteImport.update({
+  id: '/api/public/ingest-app',
+  path: '/api/public/ingest-app',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -75,6 +81,7 @@ export interface FileRoutesByFullPath {
   '/submit': typeof SubmitRoute
   '/app/$slug': typeof AppSlugRoute
   '/category/$category': typeof CategoryCategoryRoute
+  '/api/public/ingest-app': typeof ApiPublicIngestAppRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -86,6 +93,7 @@ export interface FileRoutesByTo {
   '/submit': typeof SubmitRoute
   '/app/$slug': typeof AppSlugRoute
   '/category/$category': typeof CategoryCategoryRoute
+  '/api/public/ingest-app': typeof ApiPublicIngestAppRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -98,6 +106,7 @@ export interface FileRoutesById {
   '/submit': typeof SubmitRoute
   '/app/$slug': typeof AppSlugRoute
   '/category/$category': typeof CategoryCategoryRoute
+  '/api/public/ingest-app': typeof ApiPublicIngestAppRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -111,6 +120,7 @@ export interface FileRouteTypes {
     | '/submit'
     | '/app/$slug'
     | '/category/$category'
+    | '/api/public/ingest-app'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -122,6 +132,7 @@ export interface FileRouteTypes {
     | '/submit'
     | '/app/$slug'
     | '/category/$category'
+    | '/api/public/ingest-app'
   id:
     | '__root__'
     | '/'
@@ -133,6 +144,7 @@ export interface FileRouteTypes {
     | '/submit'
     | '/app/$slug'
     | '/category/$category'
+    | '/api/public/ingest-app'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -145,6 +157,7 @@ export interface RootRouteChildren {
   SubmitRoute: typeof SubmitRoute
   AppSlugRoute: typeof AppSlugRoute
   CategoryCategoryRoute: typeof CategoryCategoryRoute
+  ApiPublicIngestAppRoute: typeof ApiPublicIngestAppRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -212,6 +225,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CategoryCategoryRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/ingest-app': {
+      id: '/api/public/ingest-app'
+      path: '/api/public/ingest-app'
+      fullPath: '/api/public/ingest-app'
+      preLoaderRoute: typeof ApiPublicIngestAppRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -225,6 +245,7 @@ const rootRouteChildren: RootRouteChildren = {
   SubmitRoute: SubmitRoute,
   AppSlugRoute: AppSlugRoute,
   CategoryCategoryRoute: CategoryCategoryRoute,
+  ApiPublicIngestAppRoute: ApiPublicIngestAppRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
