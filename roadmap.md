@@ -18,6 +18,6 @@
 
 ## Real indie directory data
 
-- [ ] Remove all placeholder apps
-- [ ] Add Book Launch Desk, TrueMargin AI, and Up All Good
-- [ ] Verify featured and main homepage grids
+- [x] Remove all placeholder apps
+- [x] Add Book Launch Desk, TrueMargin AI, and Up All Good
+- [x] Verify featured and main homepage grids
