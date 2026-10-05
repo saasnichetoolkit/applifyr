@@ -21,3 +21,10 @@
 - [x] Remove all placeholder apps
 - [x] Add Book Launch Desk, TrueMargin AI, and Up All Good
 - [x] Verify featured and main homepage grids
+
+## Admin review and directory discovery
+
+- [ ] Add secure Google admin access and role enforcement
+- [ ] Build review, edit, approve, feature, and reject dashboard
+- [ ] Add Explore search and category filters
+- [ ] Verify all three app detail pages and outbound links

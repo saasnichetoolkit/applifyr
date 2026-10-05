@@ -10,12 +10,14 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as CategoriesRouteImport } from './routes/categories'
 import { Route as ExploreRouteImport } from './routes/explore'
 import { Route as ForBuildersRouteImport } from './routes/for-builders'
 import { Route as SignInRouteImport } from './routes/sign-in'
 import { Route as SitemapDotxmlRouteImport } from './routes/sitemap[.]xml'
 import { Route as SubmitRouteImport } from './routes/submit'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AppSlugRouteImport } from './routes/app/$slug'
 import { Route as CategoryCategoryRouteImport } from './routes/category/$category'
 import { Route as ApiPublicIngestAppRouteImport } from './routes/api/public/ingest-app'
@@ -23,6 +25,10 @@ import { Route as ApiPublicIngestAppRouteImport } from './routes/api/public/inge
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const CategoriesRoute = CategoriesRouteImport.update({
@@ -55,6 +61,11 @@ const SubmitRoute = SubmitRouteImport.update({
   path: '/submit',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AppSlugRoute = AppSlugRouteImport.update({
   id: '/app/$slug',
   path: '/app/$slug',
@@ -79,6 +90,7 @@ export interface FileRoutesByFullPath {
   '/sign-in': typeof SignInRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/submit': typeof SubmitRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/app/$slug': typeof AppSlugRoute
   '/category/$category': typeof CategoryCategoryRoute
   '/api/public/ingest-app': typeof ApiPublicIngestAppRoute
@@ -91,6 +103,7 @@ export interface FileRoutesByTo {
   '/sign-in': typeof SignInRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/submit': typeof SubmitRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/app/$slug': typeof AppSlugRoute
   '/category/$category': typeof CategoryCategoryRoute
   '/api/public/ingest-app': typeof ApiPublicIngestAppRoute
@@ -98,12 +111,14 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
   '/categories': typeof CategoriesRoute
   '/explore': typeof ExploreRoute
   '/for-builders': typeof ForBuildersRoute
   '/sign-in': typeof SignInRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/submit': typeof SubmitRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/app/$slug': typeof AppSlugRoute
   '/category/$category': typeof CategoryCategoryRoute
   '/api/public/ingest-app': typeof ApiPublicIngestAppRoute
@@ -118,6 +133,7 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sitemap.xml'
     | '/submit'
+    | '/admin'
     | '/app/$slug'
     | '/category/$category'
     | '/api/public/ingest-app'
@@ -130,18 +146,21 @@ export interface FileRouteTypes {
     | '/sign-in'
     | '/sitemap.xml'
     | '/submit'
+    | '/admin'
     | '/app/$slug'
     | '/category/$category'
     | '/api/public/ingest-app'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
     | '/categories'
     | '/explore'
     | '/for-builders'
     | '/sign-in'
     | '/sitemap.xml'
     | '/submit'
+    | '/_authenticated/admin'
     | '/app/$slug'
     | '/category/$category'
     | '/api/public/ingest-app'
@@ -149,6 +168,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
   CategoriesRoute: typeof CategoriesRoute
   ExploreRoute: typeof ExploreRoute
   ForBuildersRoute: typeof ForBuildersRoute
@@ -167,6 +187,13 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/categories': {
@@ -211,6 +238,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SubmitRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/app/$slug': {
       id: '/app/$slug'
       path: '/app/$slug'
@@ -235,8 +269,20 @@ declare module '@tanstack/react-router' {
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
   CategoriesRoute: CategoriesRoute,
   ExploreRoute: ExploreRoute,
   ForBuildersRoute: ForBuildersRoute,
