@@ -75,12 +75,16 @@ export const submitApp = createServerFn({ method: "POST" })
       tagline: data.tagline,
       description: data.description,
       website_url: data.websiteUrl,
+      logo_text: data.name.slice(0, 2).toUpperCase(),
       score,
       rating: score,
+      status: "pending",
       active: false,
-      source: "manual",
-      source_id: slug,
+      verified: false,
+      is_verified: false,
+      featured: false,
+      is_featured: false,
     }).select();
     if (error) throw new Error(error.message);
-    return { slug, ...error };
+    return { slug };
   });
