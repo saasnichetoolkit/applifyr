@@ -1,16 +1,4 @@
 export const categories = [
-<<<<<<< Updated upstream
-  { slug: "productivity", label: "Productivity", code: "PRD", description: "Tools that make focused work faster and more deliberate." },
-  { slug: "finance", label: "Finance", code: "FIN", description: "Modern money, accounting, and operational finance software." },
-  { slug: "developer_tools", label: "Developer Tools", code: "DEV", description: "Infrastructure and utilities for teams that ship software." },
-  { slug: "marketing_seo", label: "Marketing & SEO", code: "MKT", description: "Growth, analytics, publishing, and search intelligence." },
-  { slug: "design_creative", label: "Design & Creative", code: "DSN", description: "Tools for visual craft, collaboration, and production." },
-  { slug: "ai_tools", label: "AI Tools", code: "AIX", description: "Applied intelligence for research, creation, and automation." },
-  { slug: "web3", label: "Web3", code: "WEB", description: "Wallets, protocols, and onchain apps." },
-  { slug: "utilities", label: "Utilities", code: "UTL", description: "Small, sharp tools that solve everyday problems." },
-  { slug: "advocacy", label: "Advocacy", code: "ADV", description: "Software for causes, communities, and civic action." },
-  { slug: "other", label: "Other", code: "OTH", description: "Useful software that crosses categories or creates a new one." },
-=======
   // Productivity & Workflow (8)
   { slug: "task_management", label: "Task Management", code: "TM", description: "Task trackers, to-do lists, project boards." },
   { slug: "note_taking", label: "Note Taking", code: "NT", description: "Digital notebooks, knowledge bases, second brains." },
@@ -73,6 +61,6 @@ export const categories = [
   { slug: "security_privacy", label: "Security & Privacy", code: "SP", description: "Password managers, encryption, privacy tools." },
   { slug: "system_utilities", label: "System Utilities", code: "SU", description: "Disk cleaners, backup tools, performance monitors." },
   { slug: "other", label: "Other", code: "OT", description: "Useful software that crosses categories or creates a new one." },
->>>>>>> Stashed changes
 ] as const;
+
 export const categoryLabels: Record<string, string> = Object.fromEntries(categories.map((item) => [item.slug, item.label]));

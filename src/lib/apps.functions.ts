@@ -59,11 +59,7 @@ export const submitApp = createServerFn({ method: "POST" })
   .inputValidator((input) => z.object({
     name: z.string().trim().min(2).max(80),
     websiteUrl: z.string().url(),
-<<<<<<< Updated upstream
     category: z.enum(categorySlugs),
-=======
-    category: z.enum(["task_management", "note_taking", "time_tracking", "automation", "calendar_scheduling", "file_management", "email_management", "distraction_blocking", "api_tools", "code_editors", "devops_ci_cd", "database_tools", "testing_qa", "security_dev", "version_control", "low_code_no_code", "accounting_bookkeeping", "payroll_hr", "crm_sales", "e_commerce_tools", "marketing_automation", "analytics_reporting", "tax_compliance", "investment_crypto", "graphic_design", "video_editing", "audio_production", "photo_editing", "3d_modeling", "writing_content", "presentation_deck", "branding_identity", "chatbots_conversational", "image_generation", "text_generation", "data_analysis_ai", "voice_synthesis", "recommendation_engine", "health_wellness", "education_learning", "social_networking", "gaming_entertainment", "travel_planning", "real_estate", "legal_compliance", "reentry_workforce", "security_privacy", "system_utilities", "other"]),
->>>>>>> Stashed changes
     tagline: z.string().trim().min(8).max(140),
     description: z.string().trim().min(20).max(1200),
     score: z.number().min(0).max(10).optional(),
@@ -79,16 +75,12 @@ export const submitApp = createServerFn({ method: "POST" })
       tagline: data.tagline,
       description: data.description,
       website_url: data.websiteUrl,
-      logo_text: data.name.slice(0, 2).toUpperCase(),
       score,
       rating: score,
-      status: "pending",
-      verified: false,
-      is_verified: false,
-      featured: false,
-      is_featured: false,
       active: false,
-    });
+      source: "manual",
+      source_id: slug,
+    }).select();
     if (error) throw new Error(error.message);
-    return { ok: true };
+    return { slug, ...error };
   });
