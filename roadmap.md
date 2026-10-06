@@ -24,7 +24,7 @@
 
 ## Admin review and directory discovery
 
-- [ ] Add secure Google admin access and role enforcement
-- [ ] Build review, edit, approve, feature, and reject dashboard
-- [ ] Add Explore search and category filters
-- [ ] Verify all three app detail pages and outbound links
+- [x] Add secure Google admin access and role enforcement
+- [x] Build review, edit, approve, feature, and reject dashboard
+- [x] Add Explore search and category filters
+- [x] Verify all three app detail pages and outbound links
