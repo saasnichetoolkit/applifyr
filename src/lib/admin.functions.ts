@@ -89,3 +89,20 @@ export const updateAppStatus = createServerFn({ method: "POST" })
     if (error) throw new Error(error.message);
     return { ok: true as const };
   });
+
+export const getIngestionStatus = createServerFn({ method: "GET" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await requireAdmin(context);
+    const { data, error } = await context.supabase.from("ingestion_runs").select("*").eq("job", "reddit-saas").maybeSingle();
+    if (error) throw new Error(error.message);
+    return data;
+  });
+
+export const runIngestionNow = createServerFn({ method: "POST" })
+  .middleware([requireSupabaseAuth])
+  .handler(async ({ context }) => {
+    await requireAdmin(context);
+    const { runRedditIngestion } = await import("./reddit-ingest.server");
+    return runRedditIngestion({ manual: true });
+  });
