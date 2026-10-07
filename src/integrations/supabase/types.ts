@@ -44,6 +44,8 @@ export type Database = {
           rating: number
           score: number
           slug: string
+          source: string | null
+          source_id: string | null
           status: string
           tagline: string
           title: string
@@ -64,6 +66,8 @@ export type Database = {
           rating: number
           score: number
           slug: string
+          source?: string | null
+          source_id?: string | null
           status?: string
           tagline: string
           title: string
@@ -84,11 +88,46 @@ export type Database = {
           rating?: number
           score?: number
           slug?: string
+          source?: string | null
+          source_id?: string | null
           status?: string
           tagline?: string
           title?: string
           verified?: boolean
           website_url?: string
+        }
+        Relationships: []
+      }
+      ingestion_runs: {
+        Row: {
+          added_count: number
+          job: string
+          last_result: string | null
+          last_run_at: string | null
+          locked_until: string | null
+          paused_reason: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          added_count?: number
+          job: string
+          last_result?: string | null
+          last_run_at?: string | null
+          locked_until?: string | null
+          paused_reason?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          added_count?: number
+          job?: string
+          last_result?: string | null
+          last_run_at?: string | null
+          locked_until?: string | null
+          paused_reason?: string | null
+          status?: string
+          updated_at?: string
         }
         Relationships: []
       }
@@ -115,6 +154,7 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
+      acquire_ingestion_lock: { Args: { _job: string }; Returns: boolean }
       claim_admin_access: { Args: never; Returns: boolean }
       has_role: {
         Args: {
