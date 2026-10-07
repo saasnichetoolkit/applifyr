@@ -12,6 +12,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from "@/components/ui/alert-dialog";
+import { IngestionPanel } from "./ingestion-panel";
 
 type Status = "pending" | "approved" | "featured" | "rejected";
 const statusOrder: Status[] = ["pending", "approved", "featured", "rejected"];
@@ -62,6 +63,7 @@ export function AdminDashboard({ initialApps }: { initialApps: AppRecord[] }) {
       <div><p className="font-mono text-xs uppercase text-signal">Control room / Review queue</p><h1 className="mt-3 font-display text-4xl font-semibold sm:text-5xl">Submission review</h1><p className="mt-3 text-muted-foreground">Edit listings and control what appears in the public directory.</p></div>
       <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground"><RadioTower className="size-4 text-signal" /> Admin channel secure</div>
     </div>
+    <IngestionPanel onAdded={() => setMessage("New pending apps were added. Reload the page to review them.")} />
     {message && <div className="mt-6 border border-signal/30 bg-signal/10 px-4 py-3 text-sm text-foreground">{message}</div>}
     <Tabs value={status} onValueChange={(value) => setStatus(value as Status)} className="mt-8">
       <TabsList className="h-auto w-full justify-start gap-1 overflow-x-auto rounded-md border border-border bg-card p-1">
