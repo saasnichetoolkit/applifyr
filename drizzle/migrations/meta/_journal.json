@@ -50,6 +50,13 @@
       "when": 1791359997282,
       "tag": "0006_add_reddit_ingestion",
       "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "7",
+      "when": 1791360127357,
+      "tag": "0007_enable_cron_extensions",
+      "breakpoints": true
     }
   ]
 }
