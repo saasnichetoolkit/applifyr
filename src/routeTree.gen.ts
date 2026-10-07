@@ -21,6 +21,7 @@ import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/
 import { Route as AppSlugRouteImport } from './routes/app/$slug'
 import { Route as CategoryCategoryRouteImport } from './routes/category/$category'
 import { Route as ApiPublicIngestAppRouteImport } from './routes/api/public/ingest-app'
+import { Route as ApiPublicJobsIngestRedditRouteImport } from './routes/api/public/jobs/ingest-reddit'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -81,6 +82,12 @@ const ApiPublicIngestAppRoute = ApiPublicIngestAppRouteImport.update({
   path: '/api/public/ingest-app',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicJobsIngestRedditRoute =
+  ApiPublicJobsIngestRedditRouteImport.update({
+    id: '/api/public/jobs/ingest-reddit',
+    path: '/api/public/jobs/ingest-reddit',
+    getParentRoute: () => rootRouteImport,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -94,6 +101,7 @@ export interface FileRoutesByFullPath {
   '/app/$slug': typeof AppSlugRoute
   '/category/$category': typeof CategoryCategoryRoute
   '/api/public/ingest-app': typeof ApiPublicIngestAppRoute
+  '/api/public/jobs/ingest-reddit': typeof ApiPublicJobsIngestRedditRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -107,6 +115,7 @@ export interface FileRoutesByTo {
   '/app/$slug': typeof AppSlugRoute
   '/category/$category': typeof CategoryCategoryRoute
   '/api/public/ingest-app': typeof ApiPublicIngestAppRoute
+  '/api/public/jobs/ingest-reddit': typeof ApiPublicJobsIngestRedditRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -122,6 +131,7 @@ export interface FileRoutesById {
   '/app/$slug': typeof AppSlugRoute
   '/category/$category': typeof CategoryCategoryRoute
   '/api/public/ingest-app': typeof ApiPublicIngestAppRoute
+  '/api/public/jobs/ingest-reddit': typeof ApiPublicJobsIngestRedditRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -137,6 +147,7 @@ export interface FileRouteTypes {
     | '/app/$slug'
     | '/category/$category'
     | '/api/public/ingest-app'
+    | '/api/public/jobs/ingest-reddit'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -150,6 +161,7 @@ export interface FileRouteTypes {
     | '/app/$slug'
     | '/category/$category'
     | '/api/public/ingest-app'
+    | '/api/public/jobs/ingest-reddit'
   id:
     | '__root__'
     | '/'
@@ -164,6 +176,7 @@ export interface FileRouteTypes {
     | '/app/$slug'
     | '/category/$category'
     | '/api/public/ingest-app'
+    | '/api/public/jobs/ingest-reddit'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -178,6 +191,7 @@ export interface RootRouteChildren {
   AppSlugRoute: typeof AppSlugRoute
   CategoryCategoryRoute: typeof CategoryCategoryRoute
   ApiPublicIngestAppRoute: typeof ApiPublicIngestAppRoute
+  ApiPublicJobsIngestRedditRoute: typeof ApiPublicJobsIngestRedditRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -266,6 +280,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ApiPublicIngestAppRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/jobs/ingest-reddit': {
+      id: '/api/public/jobs/ingest-reddit'
+      path: '/api/public/jobs/ingest-reddit'
+      fullPath: '/api/public/jobs/ingest-reddit'
+      preLoaderRoute: typeof ApiPublicJobsIngestRedditRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -292,6 +313,7 @@ const rootRouteChildren: RootRouteChildren = {
   AppSlugRoute: AppSlugRoute,
   CategoryCategoryRoute: CategoryCategoryRoute,
   ApiPublicIngestAppRoute: ApiPublicIngestAppRoute,
+  ApiPublicJobsIngestRedditRoute: ApiPublicJobsIngestRedditRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
