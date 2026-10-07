@@ -79,13 +79,23 @@ export async function runRedditIngestion({ manual }: { manual: boolean }) {
   let result = "";
   let paused: string | null = null;
   try {
-    const r = await fetch("https://www.reddit.com/r/SaaS/new.json?limit=5", {
+    const r = await fetch("https://www.reddit.com/r/SaaS/new/.rss?limit=5", {
       headers: { "User-Agent": "APPLIFYR-Ingest/1.0 (+https://applifyr.com)" },
       signal: AbortSignal.timeout(10_000),
     });
     if (!r.ok) throw new Error(`Reddit responded ${r.status}`);
-    const json = (await r.json()) as { data?: { children?: { data: { id: string; title: string; selftext: string; url: string } }[] } };
-    const posts = (json.data?.children ?? []).map((c) => c.data);
+    const xml = await r.text();
+    const decode = (s: string) => s.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
+    const posts = xml.split("<entry>").slice(1, 6).map((e) => {
+      const html = decode(e.match(/<content[^>]*>([\s\S]*?)<\/content>/)?.[1] ?? "");
+      const links = [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]).filter((u) => !/reddit\.com|redd\.it/.test(u));
+      return {
+        id: e.match(/<id>t3_([^<]+)<\/id>/)?.[1] ?? "",
+        title: decode(e.match(/<title>([\s\S]*?)<\/title>/)?.[1] ?? ""),
+        selftext: decode(html.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim(),
+        url: links[0] ?? "",
+      };
+    }).filter((p) => p.id);
     const ids = posts.map((p) => p.id);
     const { data: seen } = await supabaseAdmin.from("apps").select("source_id").eq("source", SOURCE).in("source_id", ids.length ? ids : ["-"]);
     const seenSet = new Set((seen ?? []).map((s) => s.source_id));
