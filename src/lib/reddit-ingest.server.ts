@@ -88,7 +88,7 @@ export async function runRedditIngestion({ manual }: { manual: boolean }) {
     const decode = (s: string) => s.replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&quot;/g, '"').replace(/&#39;/g, "'").replace(/&amp;/g, "&");
     const posts = xml.split("<entry>").slice(1, 6).map((e) => {
       const html = decode(e.match(/<content[^>]*>([\s\S]*?)<\/content>/)?.[1] ?? "");
-      const links = [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1]).filter((u) => !/reddit\.com|redd\.it/.test(u));
+      const links = [...html.matchAll(/href="([^"]+)"/g)].map((m) => m[1] ?? "").filter((u) => u && !/reddit\.com|redd\.it/.test(u));
       return {
         id: e.match(/<id>t3_([^<]+)<\/id>/)?.[1] ?? "",
         title: decode(e.match(/<title>([\s\S]*?)<\/title>/)?.[1] ?? ""),
