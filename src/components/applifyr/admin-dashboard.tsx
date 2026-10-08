@@ -1,6 +1,6 @@
 import { useMemo, useState, type FormEvent } from "react";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, ExternalLink, Pencil, RadioTower, Star, X } from "lucide-react";
+import { Check, ExternalLink, Eye, Pencil, RadioTower, Star, X } from "lucide-react";
 import type { AppRecord } from "@/lib/apps.functions";
 import { updateAppDetails, updateAppStatus } from "@/lib/admin.functions";
 import { categories, categoryLabels } from "@/lib/categories";
@@ -23,6 +23,7 @@ export function AdminDashboard({ initialApps }: { initialApps: AppRecord[] }) {
   const [apps, setApps] = useState(initialApps);
   const [status, setStatus] = useState<Status>("pending");
   const [editing, setEditing] = useState<AppRecord | null>(null);
+  const [viewing, setViewing] = useState<AppRecord | null>(null);
   const [busyId, setBusyId] = useState("");
   const [message, setMessage] = useState("");
   const counts = useMemo(() => Object.fromEntries(statusOrder.map((item) => [item, apps.filter((app) => app.status === item).length])), [apps]);
