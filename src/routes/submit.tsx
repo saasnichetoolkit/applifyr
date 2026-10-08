@@ -21,7 +21,7 @@ export const Route = createFileRoute("/submit")({
   component: SubmitPage,
 });
 
-const empty = { websiteUrl: "", name: "", tagline: "", description: "", category: "productivity" };
+const empty = { websiteUrl: "", name: "", tagline: "", description: "", category: "task_management" };
 
 function SubmitPage() {
   const submit = useServerFn(submitApp);

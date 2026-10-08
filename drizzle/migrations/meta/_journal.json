@@ -57,6 +57,13 @@
       "when": 1791360127357,
       "tag": "0007_enable_cron_extensions",
       "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "7",
+      "when": 1791480243506,
+      "tag": "0008_widen_app_categories",
+      "breakpoints": true
     }
   ]
 }
