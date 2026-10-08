@@ -84,7 +84,7 @@ export const submitApp = createServerFn({ method: "POST" })
       is_verified: false,
       featured: false,
       is_featured: false,
-    }).select();
+    });
     if (error) throw new Error(error.message);
     return { slug };
   });
