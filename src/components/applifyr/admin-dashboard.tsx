@@ -1,6 +1,8 @@
 import { useMemo, useState, type FormEvent } from "react";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, ExternalLink, Eye, Pencil, RadioTower, Star, X } from "lucide-react";
+import { Check, ExternalLink, Eye, LogOut, Pencil, RadioTower, Star, X } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import type { AppRecord } from "@/lib/apps.functions";
 import { updateAppDetails, updateAppStatus } from "@/lib/admin.functions";
 import { categories, categoryLabels } from "@/lib/categories";
@@ -18,6 +20,8 @@ type Status = "pending" | "approved" | "featured" | "rejected";
 const statusOrder: Status[] = ["pending", "approved", "featured", "rejected"];
 
 export function AdminDashboard({ initialApps }: { initialApps: AppRecord[] }) {
+  const navigate = useNavigate();
+  const router = useRouter();
   const saveDetails = useServerFn(updateAppDetails);
   const saveStatus = useServerFn(updateAppStatus);
   const [apps, setApps] = useState(initialApps);
@@ -37,6 +41,13 @@ export function AdminDashboard({ initialApps }: { initialApps: AppRecord[] }) {
       setMessage(`${app.title} is now ${nextStatus}.`);
     } catch (error) { setMessage(error instanceof Error ? error.message : "Status update failed"); }
     finally { setBusyId(""); }
+  }
+
+  async function signOut() {
+    await router.options.context.queryClient?.cancelQueries();
+    router.options.context.queryClient?.clear();
+    await supabase.auth.signOut();
+    await navigate({ to: "/sign-in", replace: true });
   }
 
   async function submitEdit(event: FormEvent<HTMLFormElement>) {
@@ -62,7 +73,9 @@ export function AdminDashboard({ initialApps }: { initialApps: AppRecord[] }) {
   return <section className="mx-auto max-w-7xl px-5 py-12 lg:px-8">
     <div className="flex flex-col gap-6 border-b border-border pb-8 sm:flex-row sm:items-end sm:justify-between">
       <div><p className="font-mono text-xs uppercase text-signal">Control room / Review queue</p><h1 className="mt-3 font-display text-4xl font-semibold sm:text-5xl">Submission review</h1><p className="mt-3 text-muted-foreground">Edit listings and control what appears in the public directory.</p></div>
-      <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground"><RadioTower className="size-4 text-signal" /> Admin channel secure</div>
+      <div className="flex items-center gap-2 font-mono text-xs text-muted-foreground"><RadioTower className="size-4 text-signal" /> Admin channel secure
+        <Button variant="outline" size="sm" className="ml-2 gap-2" onClick={signOut}><LogOut /> Sign out</Button>
+      </div>
     </div>
     <IngestionPanel onAdded={() => setMessage("New pending apps were added. Reload the page to review them.")} />
     {message && <div className="mt-6 border border-signal/30 bg-signal/10 px-4 py-3 text-sm text-foreground">{message}</div>}
