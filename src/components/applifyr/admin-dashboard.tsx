@@ -1,6 +1,8 @@
 import { useMemo, useState, type FormEvent } from "react";
+import { useNavigate, useRouter } from "@tanstack/react-router";
 import { useServerFn } from "@tanstack/react-start";
-import { Check, ExternalLink, Eye, Pencil, RadioTower, Star, X } from "lucide-react";
+import { Check, ExternalLink, Eye, LogOut, Pencil, RadioTower, Star, X } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 import type { AppRecord } from "@/lib/apps.functions";
 import { updateAppDetails, updateAppStatus } from "@/lib/admin.functions";
 import { categories, categoryLabels } from "@/lib/categories";
