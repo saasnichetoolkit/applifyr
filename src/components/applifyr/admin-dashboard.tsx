@@ -20,6 +20,8 @@ type Status = "pending" | "approved" | "featured" | "rejected";
 const statusOrder: Status[] = ["pending", "approved", "featured", "rejected"];
 
 export function AdminDashboard({ initialApps }: { initialApps: AppRecord[] }) {
+  const navigate = useNavigate();
+  const router = useRouter();
   const saveDetails = useServerFn(updateAppDetails);
   const saveStatus = useServerFn(updateAppStatus);
   const [apps, setApps] = useState(initialApps);
@@ -39,6 +41,13 @@ export function AdminDashboard({ initialApps }: { initialApps: AppRecord[] }) {
       setMessage(`${app.title} is now ${nextStatus}.`);
     } catch (error) { setMessage(error instanceof Error ? error.message : "Status update failed"); }
     finally { setBusyId(""); }
+  }
+
+  async function signOut() {
+    await router.options.context.queryClient?.cancelQueries();
+    router.options.context.queryClient?.clear();
+    await supabase.auth.signOut();
+    await navigate({ to: "/sign-in", replace: true });
   }
 
   async function submitEdit(event: FormEvent<HTMLFormElement>) {
