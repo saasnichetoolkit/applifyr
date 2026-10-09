@@ -29,7 +29,7 @@ function SignIn() {
     function goToDestination() {
       const dest = window.sessionStorage.getItem(AFTER_SIGN_IN_KEY) || "/admin";
       window.sessionStorage.removeItem(AFTER_SIGN_IN_KEY);
-      navigate({ to: dest });
+      navigate({ href: dest });
     }
     supabase.auth.getUser().then(({ data }) => {
       if (data.user) goToDestination();
